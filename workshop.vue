@@ -1,6 +1,5 @@
 <template>
     <div class="workshop">
-        <div id="test" v-bubble></div>
         <div class="top">
             <div class="main">
                 <div class="bg"></div>
@@ -177,17 +176,7 @@
 </template>
 
 <script>
-import bubble from '../directives/bubble'
-export default {
-    data() {
-        return {
-            wraps: []
-        }
-    },
-    directives: {
-        bubble
-    }
-}
+export default {}
 </script>
 
 <style>
@@ -203,15 +192,6 @@ ul {
 </style>
 
 <style lang="less" scoped>
-#test {
-    height: 600px;
-    width: 300px;
-    margin: auto;
-    position: relative;
-    &:hover {
-        background-color: pink;
-    }
-}
 * {
     box-sizing: border-box;
 }
