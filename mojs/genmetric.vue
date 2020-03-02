@@ -16,7 +16,7 @@ export default {
             shape: 'polygon'
         }
         COLORS.forEach((color, index) => {
-            const triangl = new mojs.Shape({
+            const triangle = new mojs.Shape({
                 ...triangleOpts,
                 fill: color,
                 radius: 65,
@@ -33,7 +33,7 @@ export default {
                 scaleX: 1,
                 y: 0
             })
-            triangl.el.style['mix-blend-mode'] = 'screen'
+            triangle.el.style['mix-blend-mode'] = 'screen'
             tl.add(
                 new mojs.Shape({
                     shape: 'polygon',
@@ -49,7 +49,7 @@ export default {
                     duration: 1000,
                     delay: 45 * (COLORS.length - index)
                 })
-            ).add(triangl)
+            ).add(triangle)
         })
         tl.play()
     }
