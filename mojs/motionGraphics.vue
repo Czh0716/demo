@@ -21,12 +21,14 @@ export default {
                 this.replay()
             }
         })
-        const duration = 300
+        const duration = 400
         const topOffsetY = 150
         const colorKeys = Object.keys(COLORS)
+        const delay = 50 * (colorKeys.length - 1)
+
         colorKeys.forEach((color, index) => {
             const offsetY = -(topOffsetY * index) / colorKeys.length
-            const offsetX = 20
+            const offsetX = 10
             const origin = `100% 100%`
             tl.add(
                 new mojs.Shape({
@@ -38,7 +40,7 @@ export default {
                     radius: 40,
                     scale: { 0: 1 },
                     duration,
-                    delay: 100 * index,
+                    delay: delay * (index - 1),
                     angle: { 0: 30 }
                 }).then({
                     y: 50,
@@ -57,7 +59,7 @@ export default {
             scale: { 0: 1 },
             opacity: { 0: 1 },
             easing: 'elastic.out',
-            delay: 500
+            delay: duration + delay
         }).then({
             angle: 180,
             duration: 500,
@@ -72,7 +74,7 @@ export default {
             duration: 1000,
             scale: { 0: 1 },
             easing: 'elastic.out',
-            delay: 500
+            delay: duration + delay
         }).then({
             angle: 180,
             duration: 500,
@@ -91,7 +93,7 @@ export default {
             strokeDashoffset: { '100%': 0 },
             duration: 1000,
             easing: 'quad.out',
-            delay: 500
+            delay: duration + delay
         }).then({
             angle: 360,
             duration: 500,
