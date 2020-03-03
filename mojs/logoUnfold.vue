@@ -11,6 +11,7 @@ export default {
                 this.replay()
             }
         })
+        const duration = 1000
         const outerTriangle = new mojs.Shape({
             shape: 'polygon',
             radius: 60,
@@ -19,15 +20,20 @@ export default {
             stroke: 'white',
             strokeWidth: { 30: 5 },
             angle: 60,
-            duration: 1000
+            duration,
+            width: 200,
+            height: 200
         })
         const innerTriangle = new mojs.Shape({
             shape: 'polygon',
-            radius: { 45: 20 },
+            radius: { 40: 20 },
             fill: 'white',
             fillOpacity: { 0: 1 },
+            stroke: 'white',
+            strokeWidth: { 5: 0 },
             angle: 60,
-            duration: 1000
+            isShowStart: true,
+            duration
         })
         const triangleBorder = new mojs.Shape({
             shape: 'polygon',
@@ -38,9 +44,8 @@ export default {
             stroke: 'white',
             strokeWidth: { 2: 0 },
             angle: 60,
-            duration: 1000
+            duration
         })
-
         const extrudeTriangleOpts = {
             shape: 'polygon',
             radius: 14,
@@ -49,34 +54,36 @@ export default {
             strokeWidth: { 14: 4 },
             isShowStart: true,
             angle: 60,
-            duration: 1000,
-            easing: 'expo.out'
+            duration,
+            easing: 'expo.out',
+            width: 60,
+            height: 60
         }
-
-        const offset = 20
-        const smallY = 50
+        const smallX = 53
+        const smallOffsetX = 30
+        function getY(x) {
+            return Math.tan((30 * Math.PI) / 180) * x
+        }
         const extrudeTriangle1 = new mojs.Shape({
             ...extrudeTriangleOpts,
-            y: { [-30]: -30 - offset },
-            x: { [smallY]: smallY + offset }
+            y: { [-getY(smallX)]: -getY(smallX + smallOffsetX) },
+            x: { [smallX]: smallX + smallOffsetX }
         })
         const extrudeTriangle2 = new mojs.Shape({
             ...extrudeTriangleOpts,
-            y: { [-30]: -30 - offset },
-            x: { [-smallY]: -smallY - offset }
+            y: { [-getY(smallX)]: -getY(smallX + smallOffsetX) },
+            x: { [-smallX]: -smallX - smallOffsetX }
         })
         const extrudeTriangle3 = new mojs.Shape({
             ...extrudeTriangleOpts,
-            y: { [1.15 * smallY]: 68 },
+            y: { 61: 61 + 2 * (getY(smallX + smallOffsetX) - getY(smallX)) },
             x: 0
         })
-
         tl.add(outerTriangle, innerTriangle, triangleBorder).add(
             extrudeTriangle1,
             extrudeTriangle2,
             extrudeTriangle3
         )
-
         tl.play()
     }
 }
