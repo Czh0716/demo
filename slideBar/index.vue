@@ -19,7 +19,6 @@
                 />
             </svg>
         </div>
-        <div ref="box" class="box"></div>
     </div>
 </template>
 
@@ -97,15 +96,6 @@ export default {
 </script>
 
 <style lang="less">
-.box {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    left: 10px;
-    top: 20px;
-    background-color: #fff;
-}
 body {
     margin: 0;
     padding: 0;
@@ -131,7 +121,7 @@ svg {
     overflow: hidden;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     .path {
-        transition: 0.5s;
+        transition: 0.5s cubic-bezier(1, 0.44, 0.265, 1.385);
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
         &.move {
             transition: none;
