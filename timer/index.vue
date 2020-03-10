@@ -5,14 +5,15 @@
             <circle cx="15" cy="15" r="3" />
             <circle cx="15" cy="27" r="3" />
         </svg>
-        <svg class="beer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
-            <g>
-              >
-              <polyline fill="none" points="11.5,13.5 14.5,41.5 35.5,41.5 39.5,13.5 "/>
-<polygon class="perr" points="15.5,17.5 17.5,38.5 32.5,38.5 35.5,17.5 34.5,15.5 32.5,17.5 29.5,15.5 27.5,17.5 25.5,15.5 
-	23.5,17.5 21.5,15.5 18.5,17.5 17.5,15.5 "/>
-            </g>
-        </svg>
+
+        <div class="theme-list">
+            <transition-group name="theme" tag="div">
+                <div v-show="showMenu" class="theme-item" key="0">WATER BREAK</div>
+                <div v-show="showMenu" class="theme-item" key="1">COFFEE BREAK</div>
+                <div v-show="showMenu" class="theme-item" key="2">OFFICE BREAK</div>
+                <div v-show="showMenu" class="theme-item" key="3">BEER BREAK</div>
+            </transition-group>
+        </div>
         <transition-group tag="div" name="wrap">
             <div class="time-list" key="timeList">
                 <transition-group name="time" tag="div">
@@ -55,38 +56,21 @@
                     </div>
                 </div>
             </div>
-            <div class="reset-btn" v-show="!showMenu" key="btn">RESET</div>
+            <div
+                v-show="!showMenu"
+                key="btn"
+                @click="start"
+                class="reset-btn"
+            >{{curr === time? 'START' :'RESET' }}</div>
         </transition-group>
     </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            time: 60,
-            curr: 60,
-            timeId: null,
-            nearbyTime: [],
-            showMenu: false
-        }
-    },
     computed: {
         progress() {
             return parseInt((this.curr / this.time) * 100)
-        }
-    },
-    methods: {
-        start() {
-            // this.nearbyTime.push(this.time - 1, this.time)
-            this.timeId = setInterval(() => {
-                if ((this.curr -= 1) <= 0) clearInterval(this.timeId)
-                this.nearbyTime.unshift(this.curr)
-
-                if (this.nearbyTime.length > 3) {
-                    this.nearbyTime.pop()
-                }
-            }, 1000)
         }
     },
     filters: {
@@ -97,36 +81,54 @@ export default {
             return `${minute}:${second}`
         }
     },
-    mounted() {
-        this.start()
-    }
+    methods: {
+        start() {
+            // this.nearbyTime.push(this.time - 1, this.time)
+            this.timeId && clearInterval(this.timeId)
+            this.curr = this.time
+            this.nearbyTime.length = 0
+            this.timeId = setInterval(() => {
+                if ((this.curr -= 1) <= 0) clearInterval(this.timeId)
+                this.nearbyTime.unshift(this.curr)
+
+                if (this.nearbyTime.length > 3) {
+                    this.nearbyTime.pop()
+                }
+            }, 1000)
+        }
+    },
+    data() {
+        return {
+            time: 60,
+            curr: 60,
+            timeId: null,
+            nearbyTime: [60],
+            showMenu: false
+        }
+    },
+    mounted() {}
 }
 </script>
 
 <style lang="less" >
-.beer {
+.tea {
     width: 40px;
-    margin-top: 20px;
-    margin-left: 20px;
-    stroke: #fff;
+    fill: white;
     transition: 0.3s;
-    cursor: pointer;
+    .content {
+        transition: 0.3s;
+        transform-origin: center bottom;
+    }
     &:hover {
         transform: scale(1.2);
-        .perr {
-            fill: skyblue;
-            stroke: skyblue;
-            transform: scaleY(0.8);
-
+        .content {
+            fill: #3b8d99;
+            transform: scaleY(0.9);
         }
-    }
-    .perr {
-        fill: white;
-                    transition: .3s;
-                    transform-origin: center bottom;
     }
 }
 @fc: #e5ebef;
+@switchDuration: 0.3s;
 html {
     height: 100%;
 }
@@ -134,6 +136,7 @@ body {
     background: #c6ffdd;
     background: linear-gradient(135deg, #aa4b6b, #6b6b83, #3b8d99);
     height: 100%;
+    overflow: hidden;
 }
 * {
     margin: 0;
@@ -143,7 +146,7 @@ body {
 .time-enter-active,
 .time-leave-active,
 .time-move {
-    transition: 0.5s linear;
+    transition: 0.2s linear;
 }
 .time-enter {
     transform: translateY(-100%);
@@ -152,16 +155,19 @@ body {
 .time-leave-to {
     opacity: 0 !important;
 }
+.wrap-enter-active,
 .wrap-leave-active {
-    transition: 0.3s !important;
+    transition: @switchDuration !important;
 }
 .leave-to() {
     transform: translateY(100px) !important;
     opacity: 0 !important;
 }
+
 .progress,
 .reset-btn {
-    &.wrap-leave-to {
+    &.wrap-leave-to,
+    &.wrap-enter {
         .leave-to;
     }
 }
@@ -185,6 +191,51 @@ body {
         transition: 0.3s;
         &:hover {
             opacity: 1;
+        }
+    }
+    .theme-list {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 200;
+        .theme-item {
+            color: #ccc;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 100;
+            padding: 4px 0px;
+            &.theme-enter-active {
+                transition-duration: 0.5s;
+            }
+            &:nth-child(1) {
+                &.theme-enter-active {
+                    transition-delay: @switchDuration;
+                }
+            }
+            &:nth-child(2) {
+                &.theme-enter-active {
+                    transition-delay: @switchDuration + 0.1s;
+                }
+            }
+            &:nth-child(3) {
+                &.theme-enter-active {
+                    transition-delay: @switchDuration + 0.2s;
+                }
+            }
+            &:nth-child(4) {
+                &.theme-enter-active {
+                    transition-delay: @switchDuration + 0.3s;
+                }
+            }
+        }
+        .theme-enter,
+        .theme-leave-to {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        .theme-leave-active {
+            transition: 0.3s;
         }
     }
     .time-list {
@@ -228,7 +279,11 @@ body {
         &.wrap-leave-active {
             transition: 0.4s 0.25s !important;
         }
-        &.wrap-leave-to {
+        &.wrap-enter-active {
+            transition: 0.4s !important;
+        }
+        &.wrap-leave-to,
+        &.wrap-enter {
             transform: translateY(100%) !important;
         }
     }
