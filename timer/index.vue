@@ -15,16 +15,14 @@
             </transition-group>
         </div>
         <transition-group tag="div" name="wrap">
-            <div class="time-list" key="timeList">
-                <transition-group name="time" tag="div">
-                    <div
-                        class="item"
-                        v-for="item in nearbyTime"
-                        :class="{active: curr === item}"
-                        :key="item"
-                    >{{item | formatTime}}</div>
-                </transition-group>
-            </div>
+            <transition-group name="time" tag="div" key="time" class="time">
+                <span
+                    v-for="(c, i) in formatTime"
+                    :key="c + i"
+                    :style="{left: `${i*0.8}em`}"
+                    class="time-c"
+                >{{c}}</span>
+            </transition-group>
             <div v-show="!showMenu" class="progress" key="progress">
                 <span class="num">{{progress}}</span>
                 <span>%</span>
@@ -71,12 +69,10 @@ export default {
     computed: {
         progress() {
             return parseInt((this.curr / this.time) * 100)
-        }
-    },
-    filters: {
-        formatTime(val) {
-            const minute = String(parseInt(val / 60)).padStart(2, '0')
-            const second = String(val % 60).padStart(2, '0')
+        },
+        formatTime() {
+            const minute = String(parseInt(this.curr / 60)).padStart(2, '0')
+            const second = String(this.curr % 60).padStart(2, '0')
 
             return `${minute}:${second}`
         }
@@ -144,15 +140,18 @@ body {
     box-sizing: border-box;
 }
 .time-enter-active,
-.time-leave-active,
-.time-move {
-    transition: 0.2s linear;
+.time-leave-active {
+    transition: 0.4s linear;
+}
+.time-leave-active {
+    position: absolute;
 }
 .time-enter {
     transform: translateY(-100%);
     opacity: 0 !important;
 }
 .time-leave-to {
+    transform: translateY(100%);
     opacity: 0 !important;
 }
 .wrap-enter-active,
@@ -238,18 +237,19 @@ body {
             transition: 0.3s;
         }
     }
-    .time-list {
+    .time {
         color: @fc;
         position: absolute;
         top: 20px;
         left: 50%;
         transform: translate(-50%);
-        .item {
-            opacity: 0.5;
-            letter-spacing: 2px;
-            &.active {
-                opacity: 1;
-            }
+        width: 5 * 0.8em;
+        height: 1.2em;
+        overflow: hidden;
+        .time-c {
+            position: absolute;
+            width: 0.8em;
+            text-align: center;
         }
     }
     .progress {
