@@ -94,6 +94,44 @@
                 </div>
             </div>
         </section>
+        <section class="contact">
+            <div class="texture"></div>
+            <div class="tit">
+                <img src="./contact-icon.svg" class="icon" />
+                <div class="text">Registrate</div>
+                <div class="sub-text">Para brindarte una mejor experiencia</div>
+            </div>
+            <div class="form">
+                <div
+                    class="tips"
+                >Te invitamos a registrar tus datos, pronto nos comunicaremos contigo para brindarte más información sobre los planes de tu interés. Recuerda que aquí no podrás comprar tu plan pero si informarte sobre el mismo.</div>
+                <div class="form-input">
+                    <div class="form-row">
+                        <input type="text" placeholder="Nombre*" />
+                        <input type="text" placeholder="Teléfono*" />
+                    </div>
+                    <div class="form-row">
+                        <input type="text" placeholder="Mail" />
+                        <input type="text" placeholder="¿Qué destinos te interesa?" />
+                    </div>
+                </div>
+                <div class="tags">
+                    <span class="tags-item">AGENDA CULTURAL</span>
+                    <span class="tags-item active">Créditos</span>
+                    <span class="tags-item">Educación</span>
+                    <span class="tags-item">Recreación</span>
+                    <span class="tags-item active">Turismo</span>
+                </div>
+                <div class="accept">
+                    <span class="check"></span>
+                    Aceptas la
+                    <span
+                        class="light"
+                    >política de tratamiento de datos.</span>
+                </div>
+                <button class="submit-btn">ENVIAR</button>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -103,6 +141,14 @@ export default {}
 </script>
 
 <style lang="less" scoped>
+.texture {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    z-index: 100;
+    bottom: 0;
+    background: url('./texture.png') no-repeat center top/cover;
+}
 .banner {
     position: relative;
     .carousel-item {
@@ -169,17 +215,9 @@ export default {}
             }
         }
     }
-    .texture {
-        position: absolute;
-        width: 100%;
-        height: 100px;
-        z-index: 100;
-        bottom: 0;
-        background: url('./texture.png') no-repeat center top/cover;
-    }
 }
 .category {
-    padding: 100px 0;
+    padding: 100px 0 200px;
     background: url('./introduce1.png') no-repeat center 0;
     .tit {
         text-align: center;
@@ -275,6 +313,96 @@ export default {}
             .arrow-right {
                 right: -25px;
             }
+        }
+    }
+}
+.contact {
+    position: relative;
+    padding: 200px 0 100px;
+    background: url('./contact.png') no-repeat center top/100%;
+    .texture {
+        top: 0;
+        transform: rotate(180deg);
+    }
+    .tit {
+        color: #f4e094;
+        text-align: center;
+        margin-bottom: 140px;
+        .text {
+            color: white;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+    }
+    .form {
+        width: 900px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 60px 80px;
+        border-radius: 16px;
+        box-shadow: 0px 10px 20px 1px rgba(0, 0, 0, 0.3);
+        .tips {
+            margin-bottom: 40px;
+            line-height: 30px;
+        }
+        .form-input {
+            margin-bottom: 40px;
+            .form-row {
+                display: flex;
+                justify-content: space-between;
+                + .form-row {
+                    margin-top: 40px;
+                }
+                input {
+                    width: 48%;
+                    line-height: 50px;
+                    border-radius: 4px;
+                    background-color: #ececec;
+                    padding: 0 16px;
+                }
+            }
+        }
+        .tags {
+            margin-bottom: 40px;
+            .tags-item {
+                display: inline-block;
+                padding: 10px 20px;
+                border: 1px solid;
+                border-radius: 24px;
+                cursor: pointer;
+                + .tags-item {
+                    margin-left: 10px;
+                }
+
+                &.active {
+                    background-color: #f4e094;
+                    color: white;
+                }
+            }
+        }
+        .accept {
+            display: flex;
+            align-items: center;
+            margin-bottom: 80px;
+            .check {
+                display: inline-block;
+                height: 20px;
+                width: 20px;
+                border: 1px solid;
+                border-radius: 4px;
+                margin-right: 10px;
+            }
+            .light {
+                color: #ee2b7b;
+            }
+        }
+        .submit-btn {
+            padding: 16px 140px;
+            background-color: #ee2b7b;
+            color: white;
+            border-radius: 4px;
+            display: block;
+            margin: 0 auto;
         }
     }
 }
