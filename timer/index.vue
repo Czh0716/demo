@@ -204,6 +204,7 @@ body {
             font-size: 30px;
             font-weight: 100;
             padding: 4px 0px;
+            cursor: pointer;
             &.theme-enter-active {
                 transition-duration: 0.5s;
             }
