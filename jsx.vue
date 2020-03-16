@@ -6,19 +6,9 @@ export default {
             b: 'value'
         }
     },
-    methods: {
-        input(e) {
-            console.log(e)
-            // this.b = e
-        }
-    },
+
     render() {
-        // const title = (
-        //     <h1 class="jsx" ref="hah">
-        //         {this.b}
-        //     </h1>
-        // )
-        const input = <input value={this.b} onInput={this.input}></input>
+        const input = <input></input>
         return input
     }
 }
