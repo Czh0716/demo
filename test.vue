@@ -12,7 +12,10 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
+body {
+    background-color: rgb(96, 90, 251);
+}
 .test {
 }
 </style>
