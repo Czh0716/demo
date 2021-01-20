@@ -13,7 +13,7 @@
         "babel-eslint": "^10.1.0",
         "eslint": "^6.8.0",
         "eslint-plugin-vue": "^6.2.2",
-        "gsap": "^3.2.2",
+        "gsap": "^3.6.0",
         "less": "^3.11.1",
         "less-loader": "^5.0.0",
         "vivus": "^0.4.5"
